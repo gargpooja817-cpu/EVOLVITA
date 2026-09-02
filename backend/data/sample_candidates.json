@@ -1,0 +1,78 @@
+[
+  {
+    "id": "candidate-1",
+    "name": "POOJA GARG",
+    "targetRole": "AI/ML Engineer (NLP & LLMs)",
+    "appliedJobId": "job-1",
+    "location": "San Francisco, CA",
+    "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=garg38179pooja%40gmail.com",
+    "availability": "Immediate (2 weeks notice)",
+    "biography": "Applicant for AI/ML Engineer (NLP & LLMs). Holds 9 verified skills and 1 portfolio project records.",
+    "skillsDNA": [
+      {
+        "name": "CSS",
+        "value": 85
+      },
+      {
+        "name": "GCP",
+        "value": 85
+      },
+      {
+        "name": "Git",
+        "value": 85
+      },
+      {
+        "name": "GitHub",
+        "value": 85
+      },
+      {
+        "name": "HTML",
+        "value": 85
+      },
+      {
+        "name": "Java",
+        "value": 85
+      },
+      {
+        "name": "JavaScript",
+        "value": 85
+      },
+      {
+        "name": "Python",
+        "value": 85
+      },
+      {
+        "name": "REST API",
+        "value": 85
+      }
+    ],
+    "projects": [
+      {
+        "name": "Enterprise Application Integration",
+        "description": "Developed and designed complex microservices and analytics dashboard using matching framework.",
+        "technologies": [
+          "CSS",
+          "GCP",
+          "Git",
+          "GitHub"
+        ],
+        "evidenceUrl": null,
+        "evidenceType": "GitHub Repository"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Tools & Environments: Git/GitHub, VS Code",
+        "issuer": "Credential Authority",
+        "date": null,
+        "hasBadge": false
+      }
+    ],
+    "sapLearningEvidence": [],
+    "decisionStatus": "Needs Review",
+    "recruiterNotes": "",
+    "matchScore": 32,
+    "confidence": "Low",
+    "appliedAt": "2026-09-01"
+  }
+]

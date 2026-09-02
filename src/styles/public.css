@@ -1,0 +1,212 @@
+/* Public marketing + auth — light SaaS, no dark theme leftovers */
+
+.marketing-page {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+.marketing-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  max-width: 1120px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.marketing-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.marketing-nav-links a:hover {
+  color: var(--text-primary);
+}
+
+.marketing-nav-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.marketing-nav-actions .nav-signin {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 550;
+}
+.marketing-nav-actions .nav-signin:hover {
+  color: var(--text-primary);
+}
+
+.marketing-section {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 4.5rem 2rem;
+}
+
+.marketing-band {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.marketing-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.marketing-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+  background: var(--accent-primary-soft);
+  border: 1px solid #ddd6fe;
+  color: var(--accent-primary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.marketing-hero h1 {
+  font-size: clamp(2.1rem, 4vw, 3.15rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.15rem;
+}
+
+.marketing-hero h1 em {
+  font-style: normal;
+  color: var(--accent-primary);
+}
+
+.feature-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.feature-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.workspace-split {
+  min-height: 360px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.step-row {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.step-num {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  width: 2rem;
+  font-family: var(--font-display);
+}
+
+.marketing-footer {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: 2rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.marketing-cta {
+  text-align: center;
+  padding: 4.5rem 2rem;
+  background: var(--bg-lavender);
+  border-top: 1px solid #e4e0f8;
+}
+
+/* Auth */
+.auth-shell {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2.25rem;
+}
+
+.auth-card.wide {
+  max-width: 440px;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 760px;
+}
+
+.role-card {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 340px;
+  cursor: pointer;
+}
+
+.role-card:hover {
+  border-color: var(--border-active);
+}
+
+@media (max-width: 960px) {
+  .marketing-hero,
+  .feature-grid-3,
+  .feature-grid-4,
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+  .marketing-nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .marketing-nav {
+    padding: 0.85rem 1rem;
+  }
+  .marketing-section,
+  .marketing-cta {
+    padding: 3rem 1rem;
+  }
+}

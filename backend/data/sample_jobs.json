@@ -1,0 +1,165 @@
+[
+  {
+    "id": "job-1",
+    "title": "AI/ML Engineer (NLP & LLMs)",
+    "department": "Engineering",
+    "location": "San Francisco, CA",
+    "type": "Full-time",
+    "workMode": "Hybrid",
+    "experienceMin": 3,
+    "experienceMax": 7,
+    "applicantsCount": 1,
+    "strongMatches": 0,
+    "status": "Active",
+    "createdDate": "2026-08-20",
+    "requiredSkills": [
+      "Python",
+      "PyTorch",
+      "Transformers",
+      "LLMs",
+      "Vector Databases"
+    ],
+    "preferredSkills": [
+      "FastAPI",
+      "Docker",
+      "LangChain",
+      "SAP AI Core"
+    ],
+    "description": "We are seeking a talented AI/ML Engineer to design, build, and deploy large language model architectures and conversational intelligence agents. You will work on optimizing model latency, prompt engineering workflows, and integrating search indices like vector databases for retrieval-augmented generation (RAG)."
+  },
+  {
+    "id": "job-2",
+    "title": "Cloud Platform Engineer",
+    "department": "Infrastructure",
+    "location": "Seattle, WA",
+    "type": "Full-time",
+    "workMode": "Remote",
+    "experienceMin": 5,
+    "experienceMax": 10,
+    "applicantsCount": 0,
+    "strongMatches": 0,
+    "status": "Active",
+    "createdDate": "2026-08-22",
+    "requiredSkills": [
+      "Kubernetes",
+      "Terraform",
+      "Go",
+      "AWS",
+      "SAP BTP"
+    ],
+    "preferredSkills": [
+      "Cloud Foundry",
+      "CI/CD",
+      "Prometheus",
+      "Docker"
+    ],
+    "description": "Join our Core Cloud Infrastructure team to manage multi-region orchestrations, microservices platform meshes, and enterprise hybrid cloud capabilities. The ideal candidate has strong skills in Infrastructure as Code (IaC) and running reliable high-performance clusters on modern architectures."
+  },
+  {
+    "id": "job-3",
+    "title": "Frontend Developer (React)",
+    "department": "Engineering",
+    "location": "New York, NY",
+    "type": "Full-time",
+    "workMode": "Hybrid",
+    "experienceMin": 2,
+    "experienceMax": 6,
+    "applicantsCount": 0,
+    "strongMatches": 0,
+    "status": "Active",
+    "createdDate": "2026-08-24",
+    "requiredSkills": [
+      "React",
+      "JavaScript",
+      "CSS3",
+      "Framer Motion",
+      "State Management"
+    ],
+    "preferredSkills": [
+      "Vite",
+      "Three.js",
+      "Recharts",
+      "Next.js"
+    ],
+    "description": "Looking for an immersive UI/UX designer and frontend developer to build outstanding dashboard interfaces. You will create highly polished web applications with smooth micro-interactions, responsive charts, and elegant user-facing analytics pages."
+  },
+  {
+    "id": "job-4",
+    "title": "Software Engineer (Full Stack)",
+    "department": "Engineering",
+    "location": "Austin, TX",
+    "type": "Full-time",
+    "workMode": "On-site",
+    "experienceMin": 3,
+    "experienceMax": 8,
+    "applicantsCount": 0,
+    "strongMatches": 0,
+    "status": "Active",
+    "createdDate": "2026-08-25",
+    "requiredSkills": [
+      "Node.js",
+      "React",
+      "PostgreSQL",
+      "JavaScript",
+      "Express"
+    ],
+    "preferredSkills": [
+      "GraphQL",
+      "Redis",
+      "TypeScript",
+      "React Native"
+    ],
+    "description": "Build robust full-stack features from UI components down to database transactions. Maintain database schemas, API layer configurations, and optimize system speed and reliability."
+  },
+  {
+    "id": "job-5",
+    "title": "Data Analyst",
+    "department": "Data Analytics",
+    "location": "Chicago, IL",
+    "type": "Full-time",
+    "workMode": "Hybrid",
+    "experienceMin": 2,
+    "experienceMax": 5,
+    "applicantsCount": 0,
+    "strongMatches": 0,
+    "status": "Active",
+    "createdDate": "2026-08-26",
+    "requiredSkills": [
+      "SQL",
+      "Python",
+      "Tableau",
+      "Data Modeling"
+    ],
+    "preferredSkills": [
+      "Power BI",
+      "Snowflake",
+      "R",
+      "Stats"
+    ],
+    "description": "Turn data sets into actionable strategy. Run analytical pipelines, formulate KPI reporting views, and communicate complex metrics to key business stakeholders."
+  },
+  {
+    "title": "frontend dev",
+    "department": "Engineering",
+    "location": "jaipur",
+    "type": "Part-time",
+    "workMode": "Remote",
+    "experienceMin": 0,
+    "experienceMax": 6,
+    "requiredSkills": [
+      "React",
+      "TypeScript",
+      "Node.js"
+    ],
+    "preferredSkills": [
+      "Docker",
+      "GraphQL"
+    ],
+    "description": "html,css,js",
+    "status": "Active",
+    "id": "job-6",
+    "createdDate": "2026-09-01",
+    "applicantsCount": 0,
+    "strongMatches": 0
+  }
+]
