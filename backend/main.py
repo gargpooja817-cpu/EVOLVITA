@@ -35,19 +35,30 @@ app = FastAPI(
 )
 
 # CORS configurations
+# Includes localhost (development) and SAP BTP US10-001 origins (production)
+_BTP_ORIGINS = [
+  # SAP BTP US10-001 — HTML5 App Repository & Approuter
+  "https://evolvita.cfapps.us10-001.hana.ondemand.com",
+  "https://evolvita-approuter.cfapps.us10-001.hana.ondemand.com",
+  "https://evolvita-ui.cfapps.us10-001.hana.ondemand.com",
+  # Allow any BTP subdomain dynamically (Launchpad, Workzone, etc.)
+]
+
 app.add_middleware(
   CORSMiddleware,
   allow_origins=[
-    "http://localhost:5173", 
+    "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:5174",
     "http://127.0.0.1:5174",
     "http://localhost:5175",
     "http://127.0.0.1:5175",
     "http://localhost:3000",
-    "http://127.0.0.1:3000"
+    "http://127.0.0.1:3000",
+    *_BTP_ORIGINS,
   ],
-  allow_origin_regex=r"http://(localhost|127\.0\.0\.1)(:[0-9]+)?",
+  # Allow localhost for dev AND *.hana.ondemand.com for BTP production
+  allow_origin_regex=r"(http://(localhost|127\.0\.0\.1)(:[0-9]+)?|https://.*\.hana\.ondemand\.com)",
   allow_credentials=True,
   allow_methods=["*"],
   allow_headers=["*"],
@@ -106,6 +117,17 @@ def read_root():
     "service": "EvolveVita Backend Intelligence Engine",
     "docs_url": "/docs"
   }
+
+# --- Health Check (required by SAP BTP Cloud Foundry HTTP health check) ---
+@app.get("/health")
+def health_check():
+  return {
+    "status": "healthy",
+    "service": "evolvita-backend",
+    "version": "1.0.0",
+    "environment": os.environ.get("ENVIRONMENT", "development")
+  }
+
 
 # --- FEATURE 1: JOB DESCRIPTION ANALYZER ---
 @app.post("/api/jobs/analyze", response_model=JobAnalysisResponse)

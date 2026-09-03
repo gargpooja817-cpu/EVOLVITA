@@ -1,0 +1,28 @@
+{
+  "sap.app": {
+    "id": "evolvita.ui",
+    "type": "application",
+    "title": "EvolveVita — AI Workforce Intelligence",
+    "description": "AI-powered inclusive workforce intelligence platform",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "dataSources": {}
+  },
+  "sap.ui": {
+    "technology": "HTML5",
+    "icons": {
+      "icon": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    },
+    "supportedThemes": ["sap_horizon", "sap_fiori_3"]
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "evolvita.service"
+  }
+}

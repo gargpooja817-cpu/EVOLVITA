@@ -1,0 +1,24 @@
+# ============================================================
+# Cloud Foundry Manifest — EvolveVita FastAPI AI Backend
+# Region: US10-001 (https://api.cf.us10-001.hana.ondemand.com)
+# Runtime: Python Buildpack
+# ============================================================
+applications:
+  - name: evolvita-backend
+    buildpacks:
+      - python_buildpack
+    memory: 512M
+    disk_quota: 1G
+    instances: 1
+    health-check-type: http
+    health-check-http-endpoint: /health
+    command: uvicorn main:app --host 0.0.0.0 --port $PORT
+    routes:
+      - route: evolvita-backend.cfapps.us10-001.hana.ondemand.com
+    env:
+      ENVIRONMENT: production
+      PYTHONUNBUFFERED: "true"
+      # BTP URLs allowed in CORS (added by deploy script)
+      BTP_FRONTEND_URL: https://evolvita-ui.cfapps.us10-001.hana.ondemand.com
+      BTP_APPROUTER_URL: https://evolvita-approuter.cfapps.us10-001.hana.ondemand.com
+    services: []

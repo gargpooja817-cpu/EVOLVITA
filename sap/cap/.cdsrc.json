@@ -1,0 +1,50 @@
+{
+  "build": {
+    "target": "gen",
+    "tasks": [
+      {
+        "for": "hana",
+        "src": "db",
+        "options": {
+          "model": ["db", "srv"]
+        }
+      },
+      {
+        "for": "node-cf",
+        "src": "srv",
+        "options": {
+          "model": ["db", "srv"]
+        }
+      }
+    ]
+  },
+  "requires": {
+    "db": {
+      "kind": "hana-cloud",
+      "[development]": {
+        "kind": "sqlite",
+        "credentials": {
+          "database": ":memory:"
+        }
+      }
+    },
+    "auth": {
+      "kind": "dummy",
+      "[production]": {
+        "kind": "xsuaa"
+      }
+    }
+  },
+  "i18n": {
+    "default_language": "en"
+  },
+  "odata": {
+    "version": "v4"
+  },
+  "log": {
+    "levels": {
+      "cds": "info",
+      "db": "warn"
+    }
+  }
+}

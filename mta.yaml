@@ -1,0 +1,224 @@
+_schema-version: "3.3.0"
+ID: evolvita
+version: 1.0.0
+description: "EvolveVita — AI-Powered Inclusive Workforce Intelligence Platform"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PARAMETERS (global)
+# ─────────────────────────────────────────────────────────────────────────────
+parameters:
+  enable-parallel-deployments: true
+  deploy-mode: blue-green
+  cf-api: https://api.cf.us10-001.hana.ondemand.com
+
+# ─────────────────────────────────────────────────────────────────────────────
+# BUILD PARAMETERS
+# ─────────────────────────────────────────────────────────────────────────────
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install
+        - npm run build
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MODULES
+# ─────────────────────────────────────────────────────────────────────────────
+modules:
+
+  # ────────────────────────────────────────────────
+  # 1. FRONTEND — React/Vite SPA (HTML5 App Module)
+  # ────────────────────────────────────────────────
+  - name: evolvita-ui
+    type: html5
+    path: .
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      build-result: dist
+      supported-platforms: [CF]
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    requires:
+      - name: evolvita-html5-repo-host
+      - name: evolvita-destination
+    provides:
+      - name: evolvita-ui-api
+        properties:
+          url: ${default-url}
+
+  # ────────────────────────────────────────────────
+  # 2. APPROUTER — Manages routing between UI, CAP, Backend
+  # ────────────────────────────────────────────────
+  - name: evolvita-approuter
+    type: approuter.nodejs
+    path: .
+    parameters:
+      memory: 256M
+      disk-quota: 256M
+      routes:
+        - route: evolvita.cfapps.us10-001.hana.ondemand.com
+    properties:
+      TENANT_HOST_PATTERN: "^(.*)-evolvita.cfapps.us10-001.hana.ondemand.com"
+    requires:
+      - name: evolvita-xsuaa
+        group: destinations
+        properties:
+          name: evolvita-xsuaa-api
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: evolvita-destination
+      - name: evolvita-html5-repo-rt
+      - name: evolvita-cap-api
+        group: destinations
+        properties:
+          name: evolvita-cap
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: evolvita-backend-api
+        group: destinations
+        properties:
+          name: evolvita-backend
+          url: ~{srv-url}
+          forwardAuthToken: false
+
+  # ────────────────────────────────────────────────
+  # 3. CAP SERVICE LAYER — OData V4 + HANA Cloud
+  # ────────────────────────────────────────────────
+  - name: evolvita-cap
+    type: nodejs
+    path: sap/cap
+    build-parameters:
+      builder: npm
+      build-result: gen/srv
+      requires:
+        - name: evolvita-cap-db-deployer
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    properties:
+      EXIT: 1
+    requires:
+      - name: evolvita-hana
+      - name: evolvita-xsuaa
+      - name: evolvita-destination
+    provides:
+      - name: evolvita-cap-api
+        properties:
+          srv-url: ${default-url}
+
+  # ────────────────────────────────────────────────
+  # 4. HANA DB DEPLOYER — Deploys schema to HANA Cloud
+  # ────────────────────────────────────────────────
+  - name: evolvita-cap-db-deployer
+    type: hdb
+    path: sap/cap/gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+      memory: 256M
+      disk-quota: 512M
+      no-start: true
+      tasks:
+        - name: deploy-to-hana
+          command: npm start
+          memory: 512M
+          disk-quota: 1G
+    requires:
+      - name: evolvita-hana
+
+  # ────────────────────────────────────────────────
+  # 5. AI BACKEND — FastAPI Python Microservice
+  # ────────────────────────────────────────────────
+  - name: evolvita-backend
+    type: python
+    path: backend
+    build-parameters:
+      builder: custom
+      commands:
+        - pip install -r requirements.txt
+      supported-platforms: [CF]
+    parameters:
+      memory: 512M
+      disk-quota: 1G
+      health-check-type: http
+      health-check-http-endpoint: /health
+      routes:
+        - route: evolvita-backend.cfapps.us10-001.hana.ondemand.com
+    properties:
+      ENVIRONMENT: production
+      BTP_APPROUTER_URL: https://evolvita.cfapps.us10-001.hana.ondemand.com
+    requires:
+      - name: evolvita-destination
+    provides:
+      - name: evolvita-backend-api
+        properties:
+          srv-url: ${default-url}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RESOURCES (BTP Service Instances)
+# ─────────────────────────────────────────────────────────────────────────────
+resources:
+
+  # ── HANA Cloud ──────────────────────────────────
+  - name: evolvita-hana
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}
+
+  # ── XSUAA ────────────────────────────────────────
+  - name: evolvita-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: evolvita-${org}-${space}
+        tenant-mode: dedicated
+
+  # ── Destination Service ──────────────────────────
+  - name: evolvita-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        HTML5Runtime_enabled: true
+        init_data:
+          instance:
+            existing_destinations_policy: update
+            destinations:
+              - Name: evolvita-backend
+                Description: EvolveVita FastAPI AI Intelligence Engine
+                URL: https://evolvita-backend.cfapps.us10-001.hana.ondemand.com
+                Type: HTTP
+                ProxyType: Internet
+                Authentication: NoAuthentication
+                HTML5.ForwardAuthToken: false
+              - Name: evolvita-cap
+                Description: EvolveVita SAP CAP OData Service
+                URL: https://evolvita-cap.cfapps.us10-001.hana.ondemand.com
+                Type: HTTP
+                ProxyType: Internet
+                Authentication: NoAuthentication
+                HTML5.ForwardAuthToken: true
+
+  # ── HTML5 App Repository (Host) ───────────────────
+  - name: evolvita-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+
+  # ── HTML5 App Repository (Runtime) ───────────────
+  - name: evolvita-html5-repo-rt
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime

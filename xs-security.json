@@ -1,0 +1,85 @@
+{
+  "xsappname": "evolvita",
+  "tenant-mode": "dedicated",
+  "description": "EvolveVita AI Workforce Intelligence — Security Descriptor",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.candidate",
+      "description": "Candidate user scope — access to resume upload, job matching, skill analysis"
+    },
+    {
+      "name": "$XSAPPNAME.recruiter",
+      "description": "Recruiter user scope — access to pipeline management, bias audit, hiring decisions"
+    },
+    {
+      "name": "$XSAPPNAME.admin",
+      "description": "Platform administrator scope — user management, system configuration"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "userId",
+      "description": "Unique platform user identifier",
+      "valueType": "string"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Candidate",
+      "description": "Candidate Role — Job seekers using EvolveVita",
+      "scope-references": [
+        "$XSAPPNAME.candidate"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "Recruiter",
+      "description": "Recruiter Role — Talent acquisition professionals",
+      "scope-references": [
+        "$XSAPPNAME.recruiter"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "Admin",
+      "description": "Platform Administrator",
+      "scope-references": [
+        "$XSAPPNAME.candidate",
+        "$XSAPPNAME.recruiter",
+        "$XSAPPNAME.admin"
+      ],
+      "attribute-references": []
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "EvolveVita_Candidate",
+      "description": "EvolveVita Candidate Users",
+      "role-template-references": [
+        "$XSAPPNAME.Candidate"
+      ]
+    },
+    {
+      "name": "EvolveVita_Recruiter",
+      "description": "EvolveVita Recruiter Users",
+      "role-template-references": [
+        "$XSAPPNAME.Recruiter"
+      ]
+    },
+    {
+      "name": "EvolveVita_Admin",
+      "description": "EvolveVita Platform Administrators",
+      "role-template-references": [
+        "$XSAPPNAME.Admin"
+      ]
+    }
+  ],
+  "oauth2-configuration": {
+    "token-validity": 43200,
+    "refresh-token-validity": 604800,
+    "redirect-uris": [
+      "https://*.hana.ondemand.com/**",
+      "https://*.cfapps.*.hana.ondemand.com/**"
+    ]
+  }
+}

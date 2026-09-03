@@ -1,0 +1,25 @@
+# ============================================================
+# Cloud Foundry Manifest — EvolveVita SAP CAP Service Layer
+# Region: US10-001 (https://api.cf.us10-001.hana.ondemand.com)
+# Runtime: Node.js + @sap/cds
+# ============================================================
+applications:
+  - name: evolvita-cap
+    buildpacks:
+      - nodejs_buildpack
+    memory: 256M
+    disk_quota: 512M
+    instances: 1
+    health-check-type: http
+    health-check-http-endpoint: /health
+    command: npm start
+    path: .
+    routes:
+      - route: evolvita-cap.cfapps.us10-001.hana.ondemand.com
+    env:
+      NODE_ENV: production
+      CDS_ENV: production
+    services:
+      - evolvita-hana
+      - evolvita-xsuaa
+      - evolvita-destination
